@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="index.jsx"></script>
+</body>
+</html>
+
+// index.jsx
+import React from "react";
+import ReactDOM from "react-dom";
+import "./styles.css";
+
+function App() {
+    return (
+        <div className="app">
+            <h1>Welcome to React!</h1>
+            <p>Start building your app by editing <code>index.jsx</code>.</p>
+        </div>
+    );
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+
+/* styles.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.app {
+    text-align: center;
+    padding: 2rem;
+}
+
+h1 {
+    color: #007bff;
+    font-size: 2.5rem;
+}
+
+p {
+    font-size: 1rem;
+    color: #555;
+}
 

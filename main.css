@@ -1,1 +1,22 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.app {
+    text-align: center;
+    padding: 2rem;
+}
+
+h1 {
+    color: #007bff;
+    font-size: 2.5rem;
+}
+
+p {
+    font-size: 1rem;
+    color: #555;
+}
 
