@@ -1,5 +1,5 @@
 function loadVerbs() {
-    return fetch('./testverbs.csv')
+    return fetch('./verbslist.csv')
         .then(response => response.text())
         .then(data => {
             return data.split('\n').map(verb => verb.trim()).filter(verb => verb.length > 0);
@@ -55,6 +55,8 @@ button.addEventListener('click', () => {
         button.textContent = 'Correct the current sentence first';
         return;
     }
+    solution_input.value = '';
+
     let time_form_number = Math.floor(Math.random() * 4); // 0-3
     let time_form = time_forms[time_form_number];
     let readable_time_form = readable_time_forms[time_form_number];
