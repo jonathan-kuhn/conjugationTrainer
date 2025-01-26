@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>React App</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>conjugationTrainer</title>
+    <link rel='stylesheet' href='./styles.css'>
+    <script type="module" src="./index.js"></script>
 </head>
 <body>
-    <div id="root"></div>
-    <script type="module" src="index.jsx"></script>
+    <h1>Train your verbes with this tool</h1>
+    <button id="changeSentenceButton">Change Sentence</button>
+    <p id="sentence">Click the button to start</p>
+    <input type="text" name="solution" id="solution" placeholder="Enter your solution here"><br>
+    <button id="checkSolutionButton">Check Solution</button>
+    <h2 id="successMessage">Was it correct?</h2>
 </body>
 </html>
