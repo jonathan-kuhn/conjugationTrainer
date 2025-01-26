@@ -15,49 +15,99 @@ loadVerbs().then(loadedVerbs => {
     verbs = loadedVerbs;
 });
 
+async function getConjugatedVerb(verb, time_form, person) {
+    console.log(person);
+    console.log(time_form);
+    console.log(verb);
+    console.log(language);
+    let response = await fetch(`https://api.cors.lol/?url=http://verbe.cc/verbecc/conjugate/${language}/${verb}`);
+    let data = await response.json();
+    console.log(data);
+    let form;
+    if (time_form === 'imperatif-présent') { // correct the form for the API, no idea what the thing is called (überbegriff of indicatif and imperative)
+        form = 'imperatif';
+    } else {
+        form = 'indicatif';}
+    console.log(form);
+    let conjugated_verb = data.value.moods[form][time_form][person];
+    return conjugated_verb;
+}
+
 let language = 'fr';
 
-let time_forms = ['présent', 'imparfait', 'passé-composé'] //['présent', 'passé composé', 'imparfait', 'futur simple', 'durativ', 'impératif', 'passé récent'];
+let time_forms = ['présent', 'imparfait', 'passé-composé', 'imperatif-présent'] //currently usable time forms, understood by verbecc, possible other forms: ['présent', 'passé composé', 'imparfait', 'futur simple', 'durativ', 'impératif', 'passé récent'];
+let readable_time_forms = ['Present', 'Imperfect', 'Past (PC)', 'Imperative'];
 let people = ['Je', 'Tu', 'Il', 'Nous', 'Vous', 'Ils']; //I know it's not very gender-inclusive, but it's just for testing purposes
+let imperativ_people = ['Tu', 'Nous', 'Vous'];
+
 let button = document.getElementById('changeSentenceButton');
 let check_button = document.getElementById('checkSolutionButton');
 let sentence_paragraph = document.getElementById('sentence');
 let solution_input = document.getElementById('solution');
 let success_message = document.getElementById('successMessage');
 
-var solution = 'test';
+var solution = 'Please create a sentence first';
+
+var new_sentence_created = false;
 
 button.addEventListener('click', () => {
-    let time_form = time_forms[Math.floor(Math.random() * 3)]; // 0-2
+    if (new_sentence_created) {
+        button.textContent = 'Correct the current sentence first';
+        return;
+    }
+    let time_form_number = Math.floor(Math.random() * 4); // 0-3
+    let time_form = time_forms[time_form_number];
+    let readable_time_form = readable_time_forms[time_form_number];
+    console.log(time_form);
+    console.log(readable_time_form);
+
     let person = Math.floor(Math.random() * 6); // 0-5
     let human_readable_person = people[person];
+
     let verb = verbs[Math.floor(Math.random() * verbs.length)]; // Random word from the list
-    let sentence = `Person: ${human_readable_person}, Time: ${time_form}, Verb: ${verb}`; 
+    
+    if (time_form === 'imperatif-présent') { // Imperative has only 3 persons, so we need to adjust the person and human_readable_person
+        person = Math.floor(Math.random() * 3);
+        human_readable_person = imperativ_people[person];
+    }
+    
+    let sentence = `Person: ${human_readable_person}, Time/Form: ${readable_time_form}, Verb: ${verb}`; 
 
     sentence_paragraph.textContent = sentence;
 
     getConjugatedVerb(verb, time_form, person).then(conjugated_verb => {
-        solution = `${conjugated_verb}.`;
-    }
-);
+        let sentence_end = '.';
+        if (time_form === 'imperatif-présent') {
+            sentence_end = '!';
+        }
+        solution = `${conjugated_verb.charAt(0).toUpperCase() + conjugated_verb.slice(1)}${sentence_end}`;
+    });
+    new_sentence_created = true;
+    check_button.textContent = 'Check solution';
 });
-async function getConjugatedVerb(verb, time_form, person) {
-    //sentence_paragraph.textContent = 'Debug: entered function';
-    //sentence_paragraph
-    console.log(language);
-    console.log(verb);
-    let response = await fetch(`https://api.cors.lol/?url=http://verbe.cc/verbecc/conjugate/${language}/${verb}`);
-    let data = await response.json();
-    console.log(data);
-    let conjugated_verb = data.value.moods.indicatif[time_form][person];
-    return conjugated_verb;
-}
+
 
 check_button.addEventListener('click', () => {
+    if (!new_sentence_created) {
+        check_button.textContent = 'Create a sentence first';
+        return;
+    }
     let user_solution = solution_input.value;
     if (solution === user_solution) {
         success_message.textContent = 'Correct!';
     } else {
         success_message.textContent = 'Incorrect!, solution is: ' + solution;
+    }
+    new_sentence_created = false;
+    button.textContent = 'New exercise';
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        if (new_sentence_created) {
+            check_button.click();
+        } else {
+            button.click();
+        }
     }
 });

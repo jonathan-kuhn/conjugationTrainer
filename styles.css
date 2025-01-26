@@ -35,12 +35,36 @@ p {
     font-family: Georgia, serif;
     font-size: 1.2em;
     color: #66e0eb;
+    margin: 0.3%;
 }
 
 a {
     font-family: Georgia, 'Times New Roman', Times, sans-serif;
     color: beige;
     font-size: 1.2em;
+}
+
+button {
+    font-family: Georgia, 'Times New Roman', Times, sans-serif;
+    color: beige;
+    font-size: 1.2em;
+    background: #347474;
+    border-radius: 10px;
+    border-color: #377057;
+    padding: 5px;
+    margin: 0.3%;
+}
+
+input {
+    font-family: Georgia, 'Times New Roman', Times, sans-serif;
+    color: #66e0eb;
+    font-size: 1.2em;
+    background: #799292;
+    border-radius: 10px;
+    border-color: #377057;
+    padding: 5px;
+    margin: 1%;
+    margin-left: 3%;
 }
 
 figcaption {
