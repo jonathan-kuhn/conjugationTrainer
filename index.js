@@ -61,8 +61,11 @@ let check_button = document.getElementById('checkSolutionButton');
 let sentence_paragraph = document.getElementById('sentence');
 let solution_input = document.getElementById('solution');
 let success_message = document.getElementById('successMessage');
+let streak_message = document.getElementById('streak');
 
 var solution = 'Please create a sentence first';
+
+var streak = 0;
 
 var new_sentence_created = false;
 
@@ -112,9 +115,12 @@ check_button.addEventListener('click', () => {
     let user_solution = solution_input.value;
     if (solution === user_solution) {
         success_message.textContent = 'Correct!';
+        streak++;
     } else {
         success_message.textContent = 'Incorrect!, solution is: ' + solution;
+        streak = 0;
     }
+    streak_message.textContent = `Streak: ${streak}`;
     new_sentence_created = false;
     button.textContent = 'New exercise';
 });
