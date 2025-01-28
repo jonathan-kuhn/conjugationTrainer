@@ -1,18 +1,33 @@
-function loadVerbs() {
-    return fetch('./verbslist.csv')
-        .then(response => response.text())
-        .then(data => {
-            return data.split('\n').map(verb => verb.trim()).filter(verb => verb.length > 0);
-        })
-        .catch(error => {
-            console.error('Error loading the CSV file:', error);
-            return [];
-        });
+function loadVerbsFromFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const data = event.target.result;
+            const verbs = data.split('\n').map(verb => verb.trim()).filter(verb => verb.length > 0);
+            resolve(verbs);
+        };
+        reader.onerror = (error) => {
+            console.error('Error reading the file:', error);
+            reject([]);
+        };
+        reader.readAsText(file);
+    });
 }
+
 let verbs = [];
 
-loadVerbs().then(loadedVerbs => {
-    verbs = loadedVerbs;
+document.addEventListener('DOMContentLoaded', () => {
+    const fileInput = document.getElementById('fileInput');
+    //fileInput.click();  //does not work, as some browsers block the click event
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            loadVerbsFromFile(file).then(loadedVerbs => {
+                verbs = loadedVerbs;
+            });
+        }
+    });
 });
 
 async function getConjugatedVerb(verb, time_form, person) {
@@ -27,7 +42,8 @@ async function getConjugatedVerb(verb, time_form, person) {
     if (time_form === 'imperatif-présent') { // correct the form for the API, no idea what the thing is called (überbegriff of indicatif and imperative)
         form = 'imperatif';
     } else {
-        form = 'indicatif';}
+        form = 'indicatif';
+    }
     console.log(form);
     let conjugated_verb = data.value.moods[form][time_form][person];
     return conjugated_verb;
@@ -35,7 +51,7 @@ async function getConjugatedVerb(verb, time_form, person) {
 
 let language = 'fr';
 
-let time_forms = ['présent', 'imparfait', 'passé-composé', 'imperatif-présent'] //currently usable time forms, understood by verbecc, possible other forms: ['présent', 'passé composé', 'imparfait', 'futur simple', 'durativ', 'impératif', 'passé récent'];
+let time_forms = ['présent', 'imparfait', 'passé-composé', 'imperatif-présent']; //currently usable time forms, understood by verbecc, possible other forms: ['présent', 'passé composé', 'imparfait', 'futur simple', 'durativ', 'impératif', 'passé récent'];
 let readable_time_forms = ['Present', 'Imperfect', 'Past (PC)', 'Imperative'];
 let people = ['Je', 'Tu', 'Il', 'Nous', 'Vous', 'Ils']; //I know it's not very gender-inclusive, but it's just for testing purposes
 let imperativ_people = ['Tu', 'Nous', 'Vous'];
@@ -87,7 +103,6 @@ button.addEventListener('click', () => {
     new_sentence_created = true;
     check_button.textContent = 'Check solution';
 });
-
 
 check_button.addEventListener('click', () => {
     if (!new_sentence_created) {
