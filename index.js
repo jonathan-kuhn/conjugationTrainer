@@ -30,25 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-async function getConjugatedVerb(verb, time_form, person) {
-    console.log(person);
-    console.log(time_form);
-    console.log(verb);
-    console.log(language);
-    let response = await fetch(`https://api.cors.lol/?url=http://verbe.cc/verbecc/conjugate/${language}/${verb}`);
-    let data = await response.json();
-    console.log(data);
-    let form;
-    if (time_form === 'imperatif-présent') { // correct the form for the API, no idea what the thing is called (überbegriff of indicatif and imperative)
-        form = 'imperatif';
-    } else {
-        form = 'indicatif';
-    }
-    console.log(form);
-    let conjugated_verb = data.value.moods[form][time_form][person];
-    return conjugated_verb;
-}
-
 let language = 'fr';
 
 let time_forms = ['présent', 'imparfait', 'passé-composé', 'imperatif-présent']; //currently usable time forms, understood by verbecc, possible other forms: ['présent', 'passé composé', 'imparfait', 'futur simple', 'durativ', 'impératif', 'passé récent'];
@@ -75,12 +56,13 @@ button.addEventListener('click', () => {
         return;
     }
     solution_input.value = '';
+    console.log('Creating a new sentence');
 
     let time_form_number = Math.floor(Math.random() * 4); // 0-3
     let time_form = time_forms[time_form_number];
     let readable_time_form = readable_time_forms[time_form_number];
-    console.log(time_form);
-    console.log(readable_time_form);
+    console.log("time form is: "+time_form);
+    console.log("time form is also: "+readable_time_form);
 
     let person = Math.floor(Math.random() * 6); // 0-5
     let human_readable_person = people[person];
@@ -106,6 +88,26 @@ button.addEventListener('click', () => {
     new_sentence_created = true;
     check_button.textContent = 'Check solution';
 });
+
+async function getConjugatedVerb(verb, time_form, person) {
+    console.log(person);
+    console.log(time_form);
+    console.log(verb);
+    console.log(language);
+    let response = await fetch(`https://proxy.jonathan-simon-kuhn.workers.dev/?url=http://verbe.cc/verbecc/conjugate/${language}/${verb}`); //https://api.cors.lol/?url=
+    console.log(response);
+    let data = await response.json();
+    console.log(data);
+    let form;
+    if (time_form === 'imperatif-présent') { // correct the form for the API, no idea what the thing is called (überbegriff of indicatif and imperative)
+        form = 'imperatif';
+    } else {
+        form = 'indicatif';
+    }
+    console.log(form);
+    let conjugated_verb = data.value.moods[form][time_form][person];
+    return conjugated_verb;
+}
 
 check_button.addEventListener('click', () => {
     if (!new_sentence_created) {
