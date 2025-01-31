@@ -58,7 +58,7 @@ button.addEventListener('click', () => {
     solution_input.value = '';
     console.log('Creating a new sentence');
 
-    let time_form_number = Math.floor(Math.random() * 4); // 0-3
+    let time_form_number = Math.floor(Math.random() * 5); // 0-4
     let time_form = time_forms[time_form_number];
     let readable_time_form = readable_time_forms[time_form_number];
     console.log("time form is: "+time_form);
