@@ -34,7 +34,7 @@ let language = 'fr';
 
 let time_forms = ['présent', 'imparfait', 'passé-composé', 'imperatif-présent', 'futur-simple']; //currently usable time forms, understood by verbecc, possible other forms: ['présent', 'passé composé', 'imparfait', 'futur simple', 'durativ', 'impératif', 'passé récent'];
 let readable_time_forms = ['Present', 'Imperfect', 'Past (PC)', 'Imperative', 'Future'];
-let people = ['Je', 'Tu', 'Il', 'Nous', 'Vous', 'Ils']; //I know it's not very gender-inclusive, but it's just for testing purposes
+let people = ['Je', 'Tu', 'Il', 'Nous', 'Vous', 'Ils']; //I know it's not very gender-inclusive, but but neither is the french language
 let imperativ_people = ['Tu', 'Nous', 'Vous'];
 
 let button = document.getElementById('changeSentenceButton');
@@ -89,7 +89,7 @@ button.addEventListener('click', () => {
     check_button.textContent = 'Check solution';
 });
 
-async function getConjugatedVerb(verb, time_form, person) {
+async function getConjugatedVerb(verb, time_form, person) { // this function gets the conjugated verb from the API
     console.log(person);
     console.log(time_form);
     console.log(verb);
@@ -109,7 +109,7 @@ async function getConjugatedVerb(verb, time_form, person) {
     return conjugated_verb;
 }
 
-check_button.addEventListener('click', () => {
+check_button.addEventListener('click', () => { // this function checks the solution
     if (!new_sentence_created) {
         check_button.textContent = 'Create a sentence first';
         return;
