@@ -68,13 +68,24 @@ button.addEventListener('click', () => {
     let human_readable_person = people[person];
 
     let verb = verbs[Math.floor(Math.random() * verbs.length)]; // Random word from the list
+
+    // Check if the verb is reflexive
+    let isReflexive = false;
+    if (verb.startsWith('se ')) {
+        isReflexive = true;
+        verb = verb.substring(3); // Remove "se " from the start
+    } else if (verb.startsWith("s'")) {
+        isReflexive = true;
+        verb = verb.substring(2); // Remove "s'" from the start
+    }
+    console.log(`Is reflexive: ${isReflexive}, Verb: ${verb}`);
     
     if (time_form === 'imperatif-présent') { // Imperative has only 3 persons, so we need to adjust the person and human_readable_person
         person = Math.floor(Math.random() * 3);
         human_readable_person = imperativ_people[person];
     }
     
-    let sentence = `Person: ${human_readable_person}, Time/Form: ${readable_time_form}, Verb: ${verb}`; 
+    let sentence = `Person: ${human_readable_person}, Time/Form: ${readable_time_form}, Verb: ${verb}, Reflexive: ${isReflexive}`; 
 
     sentence_paragraph.textContent = sentence;
 
