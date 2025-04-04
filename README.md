@@ -1,4 +1,5 @@
 # conjugationTrainer
+
 <p>Trains the conjugation of verbes in different languages. (RN only french, but with a relatively small amount of effort this can be expanded)<br>
 Run it any way you like, making this thing run as a docker container is on the todo.<br>
 You will have to provide a .txt or .csv file with the infinitive forms of all your verbs when opening the website. the conjugated forms are then fetched from verbecc (check out the github, it's a cool project).<br>
