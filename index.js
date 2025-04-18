@@ -65,15 +65,16 @@ var streak = 0;
 
 var new_sentence_created = false;
 
-button.addEventListener("click", () => {
+button.addEventListener("click", () => {   //new sencence creation
   if (new_sentence_created) {
     button.textContent = "Correct the current sentence first";
     return;
   }
   solution_input.value = "";
   console.log("Creating a new sentence");
-
-  let time_form_number = Math.floor(Math.random() * 5); // 0-4
+  
+  let time_form_number = Math.floor(Math.random() * time_forms.length);
+  console.log(time_forms.length);
   let time_form = time_forms[time_form_number];
   let readable_time_form = readable_time_forms[time_form_number];
   console.log("time form is: " + time_form);
@@ -84,7 +85,6 @@ button.addEventListener("click", () => {
 
   let verb = verbs[Math.floor(Math.random() * verbs.length)]; // Random word from the list
 
-  console.log(`Is reflexive: ${isReflexive}, Verb: ${verb}`);
 
   if (time_form === "imperatif-présent") {
     // Imperative has only 3 persons, so we need to adjust the person and human_readable_person
@@ -92,7 +92,7 @@ button.addEventListener("click", () => {
     human_readable_person = imperativ_people[person];
   }
 
-  let sentence = `Person: ${human_readable_person}, Time/Form: ${readable_time_form}, Verb: ${verb}, Reflexive: ${isReflexive}`;
+  let sentence = `Person: ${human_readable_person}, Time/Form: ${readable_time_form}, Verb: ${verb}`;
 
   sentence_paragraph.textContent = sentence;
 
@@ -133,7 +133,7 @@ async function getConjugatedVerb(verb, time_form, person) {
   return conjugated_verb;
 }
 
-check_button.addEventListener("click", () => {
+check_button.addEventListener("click", () => {   //Answer checking logic
   // this function checks the solution
   if (!new_sentence_created) {
     check_button.textContent = "Create a sentence first";
@@ -151,6 +151,43 @@ check_button.addEventListener("click", () => {
   new_sentence_created = false;
   button.textContent = "New exercise";
 });
+
+// ...existing code...
+
+// Map checkboxes to their corresponding time forms and readable forms
+const timeFormCheckboxes = {
+  "present-toggle": { timeForm: "présent", readableForm: "Present" },
+  "imperfect-toggle": { timeForm: "imparfait", readableForm: "Imperfect" },
+  "past-toggle": { timeForm: "passé-composé", readableForm: "Past (PC)" },
+  "imperative-toggle": { timeForm: "imperatif-présent", readableForm: "Imperative" },
+  "futur-toggle": { timeForm: "futur-simple", readableForm: "Future" },
+};
+
+// Function to update time_forms and readable_time_forms based on checkboxes
+function updateTimeForms() {
+  time_forms = [];
+  readable_time_forms = [];
+  for (const [checkboxId, { timeForm, readableForm }] of Object.entries(timeFormCheckboxes)) {
+    const checkbox = document.getElementById(checkboxId);
+    if (checkbox.checked) {
+      time_forms.push(timeForm);
+      readable_time_forms.push(readableForm);
+    }
+  }
+}
+
+// Add event listeners to checkboxes
+for (const checkboxId of Object.keys(timeFormCheckboxes)) {
+  const checkbox = document.getElementById(checkboxId);
+  checkbox.addEventListener("change", updateTimeForms);
+}
+
+// Initialize time_forms and readable_time_forms based on default checkbox states
+updateTimeForms();
+
+// ...existing code...
+
+
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
