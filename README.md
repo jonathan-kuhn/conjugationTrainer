@@ -16,4 +16,4 @@ This project is licensed under the **GNU Affero General Public License v3.0 (AGP
 
 See the [LICENSE](LICENSE) file for more details.
 
-I stole the License & Philosophy from the github user [CyberTimon](https://github.com/CyberTimon/CyberTimon), check him out!
+I copied the **License & Philosophy** section from the github user [CyberTimon](https://github.com/CyberTimon/CyberTimon), check him out!
