@@ -111,25 +111,11 @@ button.addEventListener("click", () => {   //new sencence creation
 
 async function getConjugatedVerb(verb, time_form, person) {
   // this function gets the conjugated verb from the API
-  console.log(person);
-  console.log(time_form);
-  console.log(verb);
-  console.log(language);
+  console.log(`${language}/${verb}/${time_form}/${person}`);
   let response = await fetch(
-    `https://proxy.jonathan-simon-kuhn.workers.dev/?url=http://verbe.cc/verbecc/conjugate/${language}/${verb}`
-  ); //https://api.cors.lol/?url=
-  console.log(response);
-  let data = await response.json();
-  console.log(data);
-  let form;
-  if (time_form === "imperatif-présent") {
-    // correct the form for the API, no idea what the thing is called (überbegriff of indicatif and imperative)
-    form = "imperatif";
-  } else {
-    form = "indicatif";
-  }
-  console.log(form);
-  let conjugated_verb = data.value.moods[form][time_form][person];
+    `fetchconjugation/${language}/${verb}/${time_form}/${person}` // Adjusted to match the Flask route
+  ); 
+  let conjugated_verb = await response.text();
   return conjugated_verb;
 }
 
