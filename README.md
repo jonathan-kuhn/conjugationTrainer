@@ -10,10 +10,7 @@ This project supports Present, Past (Passé compose), Imperfect and Imperative t
   <li>Show if a verb was predicted or not</li>
 </ul>
 
-## License & Philosophy
+## License
 
-This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. I chose this license to ensure that my project and any of its derivatives will always remain open-source and free for the community. It protects the project from being used in closed-source commercial software, ensuring that improvements benefit everyone.
-
-See the [LICENSE](LICENSE) file for more details.
-
-I copied the **License & Philosophy** section from the github user [CyberTimon](https://github.com/CyberTimon/CyberTimon), check him out!
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+See [LICENSE](LICENSE) for more details.
