@@ -4,6 +4,7 @@
 Run it any way you like, making this thing run as a docker container is on the todo.<br>
 You will have to provide a .txt or .csv file with the infinitive forms of all your verbs when opening the website. the conjugated forms are then fetched from verbecc (check out the github, it's a cool project).<br>
 This project supports Present, Past (Passé compose), Imperfect and Imperative time forms. It supports reflexive verbs, both with "s'" and "se "</p>
+<p>You can <a href="https://conjugationtrainer.onrender.com/">try it out</a>. This is hosted using Render. It may take a few seconds to start. If you want it to be faster, you'll have to host it yourself.
 <h2>Todo:</h2>
 <ul>
   <li>Dockerize</li>
