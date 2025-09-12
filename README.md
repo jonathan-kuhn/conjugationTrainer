@@ -8,6 +8,8 @@ This project supports Present, Past (Passé compose), Imperfect and Imperative t
 <h2>Todo:</h2>
 <ul>
   <li>Dockerize</li>
+  <li>Add Conditional Présent (and possibly more)</li>
+  <li>Possibly add error handling (e.g. no document added or no time form selected)</li>
   <li>Show if a verb was predicted or not</li>
 </ul>
 
